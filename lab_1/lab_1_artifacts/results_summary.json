@@ -1,0 +1,94 @@
+{
+  "best_model": "conv1d",
+  "best_dataset": "original_scaled",
+  "results_before_grid_search": {
+    "val_rmse": 4.861263369697581,
+    "val_r2": 0.9064228627626509,
+    "test_rmse": 5.5931885716773415,
+    "test_r2": 0.8859238376714299,
+    "test_mae": 4.072486806326355
+  },
+  "grid_search_params": {
+    "filters": 64,
+    "kernel_size": 5,
+    "dropout": 0.3,
+    "learning_rate": 0.0005
+  },
+  "results_after_grid_search": {
+    "val_rmse": 4.347448006472641,
+    "val_r2": 0.9251588853245065,
+    "test_rmse": 5.475383517472,
+    "test_r2": 0.8906786294237011,
+    "test_mae": 3.7884299852990155
+  },
+  "improvement": {
+    "rmse_percentage": 2.106223537712992,
+    "r2_percentage": 0.5367043474943357
+  },
+  "all_models_comparison": [
+    {
+      "dataset": "original_scaled",
+      "model": "conv1d",
+      "train_rmse": 3.9478418709290506,
+      "train_r2": 0.9408975848871791,
+      "val_rmse": 4.861263369697581,
+      "val_r2": 0.9064228627626509
+    },
+    {
+      "dataset": "original_scaled",
+      "model": "dense",
+      "train_rmse": 5.1827253825738095,
+      "train_r2": 0.8981403627805586,
+      "val_rmse": 5.119086370748009,
+      "val_r2": 0.8962336912315275
+    },
+    {
+      "dataset": "selected_scaled",
+      "model": "conv1d",
+      "train_rmse": 4.770616560627574,
+      "train_r2": 0.9136952392331186,
+      "val_rmse": 5.793360450651616,
+      "val_r2": 0.8670976824652207
+    },
+    {
+      "dataset": "selected_scaled",
+      "model": "dense",
+      "train_rmse": 6.772573365935855,
+      "train_r2": 0.826062522752627,
+      "val_rmse": 6.1940445693451185,
+      "val_r2": 0.848078197070021
+    },
+    {
+      "dataset": "selected",
+      "model": "conv1d",
+      "train_rmse": 11.432984600240324,
+      "train_r2": 0.5043159241158031,
+      "val_rmse": 10.931056323161995,
+      "val_r2": 0.5268534063198569
+    },
+    {
+      "dataset": "original",
+      "model": "conv1d",
+      "train_rmse": 17.116169161011573,
+      "train_r2": -0.11096114522646028,
+      "val_rmse": 17.253318858787747,
+      "val_r2": -0.17873655182719017
+    },
+    {
+      "dataset": "original",
+      "model": "dense",
+      "train_rmse": 22.255937297558052,
+      "train_r2": -0.8783542781774183,
+      "val_rmse": 19.773127440816562,
+      "val_r2": -0.5481826090566972
+    },
+    {
+      "dataset": "selected",
+      "model": "dense",
+      "train_rmse": 30.88424105862736,
+      "train_r2": -2.6170923513916717,
+      "val_rmse": 25.39803617984958,
+      "val_r2": -1.5542989730215244
+    }
+  ]
+}
