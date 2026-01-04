@@ -1,0 +1,143 @@
+{
+  "best_model": "bidirectional_gru",
+  "best_dataset": "selected_scaled",
+  "num_classes": 7,
+  "class_names": [
+    "Insufficient_Weight",
+    "Normal_Weight",
+    "Obesity_Type_I",
+    "Obesity_Type_II",
+    "Obesity_Type_III",
+    "Overweight_Level_I",
+    "Overweight_Level_II"
+  ],
+  "results_before_grid_search": {
+    "val_accuracy": 0.9776357827476039,
+    "val_balanced_accuracy": 0.9765754363761009,
+    "val_f1_macro": 0.9764337953790178,
+    "test_accuracy": 0.9585987261146497,
+    "test_balanced_accuracy": 0.9570169656784607,
+    "test_f1_macro": 0.9560269670275697,
+    "test_f1_weighted": 0.9582776769109376,
+    "test_f1_per_class": [
+      0.9523809523809523,
+      0.9113924050632911,
+      0.9807692307692307,
+      0.989010989010989,
+      1.0,
+      0.9135802469135802,
+      0.945054945054945
+    ]
+  },
+  "grid_search_params": {
+    "gru_units_1": 64,
+    "gru_units_2": 64,
+    "dropout": 0.4,
+    "learning_rate": 0.001
+  },
+  "results_after_grid_search": {
+    "val_accuracy": 0.9808306709265175,
+    "val_balanced_accuracy": 0.9798938369070449,
+    "val_f1_macro": 0.9798206008698057,
+    "test_accuracy": 0.9745222929936306,
+    "test_balanced_accuracy": 0.9731632183476243,
+    "test_f1_macro": 0.9728654679389033,
+    "test_f1_weighted": 0.9743020898007004,
+    "test_f1_per_class": [
+      0.975609756097561,
+      0.9512195121951219,
+      0.9904761904761905,
+      0.989010989010989,
+      1.0,
+      0.9367088607594937,
+      0.967032967032967
+    ]
+  },
+  "improvement": {
+    "accuracy_percentage": 1.661129568106312,
+    "balanced_accuracy_percentage": 1.6871438279797868,
+    "f1_macro_percentage": 1.7612997846375558
+  },
+  "all_models_comparison": [
+    {
+      "dataset": "selected_scaled",
+      "model": "bidirectional_gru",
+      "train_acc": 0.9712328767123287,
+      "train_balanced_acc": 0.9699245980788672,
+      "train_f1": 0.9693657362790409,
+      "val_acc": 0.9776357827476039,
+      "val_balanced_acc": 0.9765754363761009,
+      "val_f1": 0.9764337953790178
+    },
+    {
+      "dataset": "original",
+      "model": "bidirectional_gru",
+      "train_acc": 0.9794520547945206,
+      "train_balanced_acc": 0.9791266098238657,
+      "train_f1": 0.9789454970717539,
+      "val_acc": 0.9744408945686901,
+      "val_balanced_acc": 0.9738681533751427,
+      "val_f1": 0.9738641393969979
+    },
+    {
+      "dataset": "selected",
+      "model": "bidirectional_gru",
+      "train_acc": 0.9794520547945206,
+      "train_balanced_acc": 0.9788829757050255,
+      "train_f1": 0.9785956775635326,
+      "val_acc": 0.9712460063897763,
+      "val_balanced_acc": 0.9701570754480368,
+      "val_f1": 0.9697600288861127
+    },
+    {
+      "dataset": "selected_scaled",
+      "model": "dense",
+      "train_acc": 0.9945205479452055,
+      "train_balanced_acc": 0.994233783528385,
+      "train_f1": 0.9941596163191101,
+      "val_acc": 0.9584664536741214,
+      "val_balanced_acc": 0.9559065278597731,
+      "val_f1": 0.9558777631041011
+    },
+    {
+      "dataset": "original_scaled",
+      "model": "dense",
+      "train_acc": 0.9821917808219178,
+      "train_balanced_acc": 0.9814531820395098,
+      "train_f1": 0.981414604712614,
+      "val_acc": 0.939297124600639,
+      "val_balanced_acc": 0.9348382536981515,
+      "val_f1": 0.9347517882924207
+    },
+    {
+      "dataset": "original_scaled",
+      "model": "bidirectional_gru",
+      "train_acc": 0.9773972602739726,
+      "train_balanced_acc": 0.9767081726004222,
+      "train_f1": 0.9761615947972991,
+      "val_acc": 0.9329073482428115,
+      "val_balanced_acc": 0.9314364545105992,
+      "val_f1": 0.9301994599416099
+    },
+    {
+      "dataset": "original",
+      "model": "dense",
+      "train_acc": 0.13904109589041097,
+      "train_balanced_acc": 0.14285714285714285,
+      "train_f1": 0.03487672880336741,
+      "val_acc": 0.13738019169329074,
+      "val_balanced_acc": 0.14285714285714285,
+      "val_f1": 0.03451043338683788
+    },
+    {
+      "dataset": "selected",
+      "model": "dense",
+      "train_acc": 0.12123287671232877,
+      "train_balanced_acc": 0.12272285537591661,
+      "train_f1": 0.04908817798476174,
+      "val_acc": 0.1182108626198083,
+      "val_balanced_acc": 0.12020279810037222,
+      "val_f1": 0.04849004849004849
+    }
+  ]
+}

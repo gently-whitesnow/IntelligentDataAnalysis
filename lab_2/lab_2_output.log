@@ -1,0 +1,429 @@
+
+======================================================================
+                    ЛАБОРАТОРНАЯ 2 - ВАРИАНТ 7
+          Классификация уровней ожирения
+======================================================================
+============================================================
+ДАТАСЕТ ЗАГРУЖЕН
+============================================================
+Размерность: (2111, 17)
+
+Колонки: ['Gender', 'Age', 'Height', 'Weight', 'family_history_with_overweight', 'FAVC', 'FCVC', 'NCP', 'CAEC', 'SMOKE', 'CH2O', 'SCC', 'FAF', 'TUE', 'CALC', 'MTRANS', 'NObeyesdad']
+
+Типы данных:
+Gender                             object
+Age                               float64
+Height                            float64
+Weight                            float64
+family_history_with_overweight     object
+FAVC                               object
+FCVC                              float64
+NCP                               float64
+CAEC                               object
+SMOKE                              object
+CH2O                              float64
+SCC                                object
+FAF                               float64
+TUE                               float64
+CALC                               object
+MTRANS                             object
+NObeyesdad                         object
+dtype: object
+
+============================================================
+ОПИСАТЕЛЬНАЯ СТАТИСТИКА
+============================================================
+
+Численные признаки:
+               Age       Height  ...          FAF          TUE
+count  2111.000000  2111.000000  ...  2111.000000  2111.000000
+mean     24.312600     1.701677  ...     1.010298     0.657866
+std       6.345968     0.093305  ...     0.850592     0.608927
+min      14.000000     1.450000  ...     0.000000     0.000000
+25%      19.947192     1.630000  ...     0.124505     0.000000
+50%      22.777890     1.700499  ...     1.000000     0.625350
+75%      26.000000     1.768464  ...     1.666678     1.000000
+max      61.000000     1.980000  ...     3.000000     2.000000
+
+[8 rows x 8 columns]
+
+------------------------------------------------------------
+КАТЕГОРИАЛЬНЫЕ ПРИЗНАКИ
+------------------------------------------------------------
+
+Gender:
+Gender
+Male      1068
+Female    1043
+Name: count, dtype: int64
+
+family_history_with_overweight:
+family_history_with_overweight
+yes    1726
+no      385
+Name: count, dtype: int64
+
+FAVC:
+FAVC
+yes    1866
+no      245
+Name: count, dtype: int64
+
+CAEC:
+CAEC
+Sometimes     1765
+Frequently     242
+Always          53
+no              51
+Name: count, dtype: int64
+
+SMOKE:
+SMOKE
+no     2067
+yes      44
+Name: count, dtype: int64
+
+SCC:
+SCC
+no     2015
+yes      96
+Name: count, dtype: int64
+
+CALC:
+CALC
+Sometimes     1401
+no             639
+Frequently      70
+Always           1
+Name: count, dtype: int64
+
+MTRANS:
+MTRANS
+Public_Transportation    1580
+Automobile                457
+Walking                    56
+Motorbike                  11
+Bike                        7
+Name: count, dtype: int64
+
+NObeyesdad:
+NObeyesdad
+Obesity_Type_I         351
+Obesity_Type_III       324
+Obesity_Type_II        297
+Overweight_Level_I     290
+Overweight_Level_II    290
+Normal_Weight          287
+Insufficient_Weight    272
+Name: count, dtype: int64
+
+------------------------------------------------------------
+ПРОПУЩЕННЫЕ ЗНАЧЕНИЯ
+------------------------------------------------------------
+Пропущенных значений не найдено!
+
+============================================================
+ПОСТРОЕНИЕ ОДНОМЕРНЫХ ВИЗУАЛИЗАЦИЙ
+============================================================
+Сохранено 17 графиков распределений
+
+============================================================
+ОЧИСТКА ДАННЫХ
+============================================================
+Удалено дубликатов строк: 24
+Итоговая форма датасета: (2087, 17)
+
+============================================================
+КОДИРОВАНИЕ КАТЕГОРИАЛЬНЫХ ПРИЗНАКОВ
+============================================================
+Label Encoding для Gender: ['Female', 'Male']
+Label Encoding для family_history_with_overweight: ['no', 'yes']
+Label Encoding для FAVC: ['no', 'yes']
+Label Encoding для SMOKE: ['no', 'yes']
+Label Encoding для SCC: ['no', 'yes']
+One-Hot Encoding для CAEC: ['Sometimes', 'Frequently', 'Always', 'no']
+One-Hot Encoding для CALC: ['no', 'Sometimes', 'Frequently', 'Always']
+One-Hot Encoding для MTRANS: ['Public_Transportation', 'Walking', 'Automobile', 'Motorbike', 'Bike']
+
+Итоговая размерность после кодирования: (2087, 27)
+
+============================================================
+АНАЛИЗ КОРРЕЛЯЦИЙ
+============================================================
+
+Топ-10 корреляций с NObeyesdad:
+NObeyesdad                        1.000000
+Weight                            0.388802
+family_history_with_overweight    0.330391
+Age                               0.238308
+CH2O                              0.092616
+FAVC                              0.041023
+Height                            0.038700
+FCVC                              0.025728
+Gender                            0.014699
+SMOKE                            -0.023341
+Name: NObeyesdad, dtype: float64
+
+============================================================
+ИНЖИНИРИНГ ПРИЗНАКОВ
+============================================================
+Создано новых признаков: 5
+  - BMI
+  - age_weight_interaction
+  - height_weight_ratio
+  - water_activity_ratio
+  - meal_frequency_score
+Всего признаков: 32
+
+============================================================
+ПОДГОТОВКА НАБОРОВ ДАННЫХ
+============================================================
+Всего объектов: 2087
+Всего признаков: 31
+Количество классов: 7
+
+Классы: ['Insufficient_Weight', 'Normal_Weight', 'Obesity_Type_I', 'Obesity_Type_II', 'Obesity_Type_III', 'Overweight_Level_I', 'Overweight_Level_II']
+
+============================================================
+ОТБОР ПРИЗНАКОВ
+============================================================
+
+Топ-10 оценок взаимной информации:
+BMI                       1.826926
+height_weight_ratio       1.429528
+Weight                    1.251108
+age_weight_interaction    0.882456
+Age                       0.588924
+meal_frequency_score      0.560431
+Height                    0.415500
+FCVC                      0.401730
+water_activity_ratio      0.344551
+CH2O                      0.298471
+dtype: float64
+
+Выбрано топ 21 признаков (70%):
+  1. BMI (MI: 1.8269)
+  2. height_weight_ratio (MI: 1.4295)
+  3. Weight (MI: 1.2511)
+  4. age_weight_interaction (MI: 0.8825)
+  5. Age (MI: 0.5889)
+  6. meal_frequency_score (MI: 0.5604)
+  7. Height (MI: 0.4155)
+  8. FCVC (MI: 0.4017)
+  9. water_activity_ratio (MI: 0.3446)
+  10. CH2O (MI: 0.2985)
+  ... и еще 11 признаков
+
+Создано 4 набора данных:
+  - original: 31 признаков, train=1460, val=313, test=314
+  - original_scaled: 31 признаков, train=1460, val=313, test=314
+  - selected: 21 признаков, train=1460, val=313, test=314
+  - selected_scaled: 21 признаков, train=1460, val=313, test=314
+
+============================================================
+ОБУЧЕНИЕ И ОЦЕНКА МОДЕЛЕЙ
+============================================================
+
+------------------------------------------------------------
+Набор данных: original
+------------------------------------------------------------
+
+Обучение Dense-модели...
+Dense - Train Acc: 0.1390, Balanced Acc: 0.1429, F1: 0.0349
+Dense - Val   Acc: 0.1374, Balanced Acc: 0.1429, F1: 0.0345
+
+Обучение Bidirectional GRU модели...
+BiGRU - Train Acc: 0.9795, Balanced Acc: 0.9791, F1: 0.9789
+BiGRU - Val   Acc: 0.9744, Balanced Acc: 0.9739, F1: 0.9739
+
+------------------------------------------------------------
+Набор данных: original_scaled
+------------------------------------------------------------
+
+Обучение Dense-модели...
+Dense - Train Acc: 0.9822, Balanced Acc: 0.9815, F1: 0.9814
+Dense - Val   Acc: 0.9393, Balanced Acc: 0.9348, F1: 0.9348
+
+Обучение Bidirectional GRU модели...
+BiGRU - Train Acc: 0.9774, Balanced Acc: 0.9767, F1: 0.9762
+BiGRU - Val   Acc: 0.9329, Balanced Acc: 0.9314, F1: 0.9302
+
+------------------------------------------------------------
+Набор данных: selected
+------------------------------------------------------------
+
+Обучение Dense-модели...
+Dense - Train Acc: 0.1212, Balanced Acc: 0.1227, F1: 0.0491
+Dense - Val   Acc: 0.1182, Balanced Acc: 0.1202, F1: 0.0485
+
+Обучение Bidirectional GRU модели...
+BiGRU - Train Acc: 0.9795, Balanced Acc: 0.9789, F1: 0.9786
+BiGRU - Val   Acc: 0.9712, Balanced Acc: 0.9702, F1: 0.9698
+
+------------------------------------------------------------
+Набор данных: selected_scaled
+------------------------------------------------------------
+
+Обучение Dense-модели...
+Dense - Train Acc: 0.9945, Balanced Acc: 0.9942, F1: 0.9942
+Dense - Val   Acc: 0.9585, Balanced Acc: 0.9559, F1: 0.9559
+
+Обучение Bidirectional GRU модели...
+BiGRU - Train Acc: 0.9712, Balanced Acc: 0.9699, F1: 0.9694
+BiGRU - Val   Acc: 0.9776, Balanced Acc: 0.9766, F1: 0.9764
+
+============================================================
+СРАВНЕНИЕ МОДЕЛЕЙ
+============================================================
+
+Качество всех моделей (отсортировано по Balanced Accuracy на валидации):
+        dataset             model  train_acc  train_balanced_acc  train_f1  val_acc  val_balanced_acc   val_f1
+selected_scaled bidirectional_gru   0.971233            0.969925  0.969366 0.977636          0.976575 0.976434
+       original bidirectional_gru   0.979452            0.979127  0.978945 0.974441          0.973868 0.973864
+       selected bidirectional_gru   0.979452            0.978883  0.978596 0.971246          0.970157 0.969760
+selected_scaled             dense   0.994521            0.994234  0.994160 0.958466          0.955907 0.955878
+original_scaled             dense   0.982192            0.981453  0.981415 0.939297          0.934838 0.934752
+original_scaled bidirectional_gru   0.977397            0.976708  0.976162 0.932907          0.931436 0.930199
+       original             dense   0.139041            0.142857  0.034877 0.137380          0.142857 0.034510
+       selected             dense   0.121233            0.122723  0.049088 0.118211          0.120203 0.048490
+
+============================================================
+ЛУЧШАЯ МОДЕЛЬ: bidirectional_gru на selected_scaled
+============================================================
+Accuracy на валидации:          0.9776
+Balanced Accuracy на валидации: 0.9766
+F1-score на валидации:          0.9764
+
+Качество на тестовой выборке:
+Test Accuracy:          0.9586
+Test Balanced Accuracy: 0.9570
+Test F1-score (macro):  0.9560
+Test F1-score (weighted): 0.9583
+
+Отчет по классам:
+                     precision    recall  f1-score   support
+
+Insufficient_Weight       0.91      1.00      0.95        40
+      Normal_Weight       0.97      0.86      0.91        42
+     Obesity_Type_I       1.00      0.96      0.98        53
+    Obesity_Type_II       0.98      1.00      0.99        45
+   Obesity_Type_III       1.00      1.00      1.00        49
+ Overweight_Level_I       0.93      0.90      0.91        41
+Overweight_Level_II       0.91      0.98      0.95        44
+
+           accuracy                           0.96       314
+          macro avg       0.96      0.96      0.96       314
+       weighted avg       0.96      0.96      0.96       314
+
+Матрица ошибок сохранена в lab_2_artifacts/confusion_matrix_best.png
+
+============================================================
+RANDOM SEARCH - BIDIRECTIONAL_GRU
+============================================================
+Тестируется комбинаций параметров: 9 из 81 возможных...
+  [1/9] {'gru_units_1': 64, 'gru_units_2': 16, 'dropout': 0.2, 'learning_rate': 0.0005}
+    -> Balanced Acc: 0.9592, Acc: 0.9617, F1: 0.9589
+  [2/9] {'gru_units_1': 64, 'gru_units_2': 32, 'dropout': 0.3, 'learning_rate': 0.0001}
+    -> Balanced Acc: 0.9059, Acc: 0.9105, F1: 0.9000
+  [3/9] {'gru_units_1': 32, 'gru_units_2': 16, 'dropout': 0.4, 'learning_rate': 0.0005}
+    -> Balanced Acc: 0.9191, Acc: 0.9233, F1: 0.9188
+  [4/9] {'gru_units_1': 64, 'gru_units_2': 16, 'dropout': 0.2, 'learning_rate': 0.0001}
+    -> Balanced Acc: 0.8718, Acc: 0.8786, F1: 0.8690
+  [5/9] {'gru_units_1': 32, 'gru_units_2': 16, 'dropout': 0.3, 'learning_rate': 0.0005}
+    -> Balanced Acc: 0.8159, Acc: 0.8243, F1: 0.7671
+  [6/9] {'gru_units_1': 64, 'gru_units_2': 32, 'dropout': 0.3, 'learning_rate': 0.0005}
+    -> Balanced Acc: 0.9732, Acc: 0.9744, F1: 0.9731
+  [7/9] {'gru_units_1': 64, 'gru_units_2': 64, 'dropout': 0.4, 'learning_rate': 0.001}
+    -> Balanced Acc: 0.9799, Acc: 0.9808, F1: 0.9798
+  [8/9] {'gru_units_1': 64, 'gru_units_2': 16, 'dropout': 0.4, 'learning_rate': 0.0005}
+    -> Balanced Acc: 0.8432, Acc: 0.8498, F1: 0.8168
+  [9/9] {'gru_units_1': 32, 'gru_units_2': 16, 'dropout': 0.4, 'learning_rate': 0.0001}
+    -> Balanced Acc: 0.8150, Acc: 0.8243, F1: 0.7772
+
+============================================================
+ЛУЧШИЕ ПАРАМЕТРЫ НАЙДЕНЫ
+============================================================
+Параметры: {'gru_units_1': 64, 'gru_units_2': 64, 'dropout': 0.4, 'learning_rate': 0.001}
+Balanced Accuracy на валидации: 0.9799
+
+============================================================
+ФИНАЛЬНАЯ ОЦЕНКА НА ТЕСТОВОЙ ВЫБОРКЕ
+============================================================
+
+До Grid Search:
+  Test Accuracy:          0.9586
+  Test Balanced Accuracy: 0.9570
+  Test F1-score:          0.9560
+
+После Grid Search:
+  Test Accuracy:          0.9745
+  Test Balanced Accuracy: 0.9732
+  Test F1-score:          0.9729
+
+Улучшение:
+  Accuracy:          +1.66%
+  Balanced Accuracy: +1.69%
+  F1-score:          +1.76%
+
+Отчет по классам после Grid Search:
+                     precision    recall  f1-score   support
+
+Insufficient_Weight       0.95      1.00      0.98        40
+      Normal_Weight       0.97      0.93      0.95        42
+     Obesity_Type_I       1.00      0.98      0.99        53
+    Obesity_Type_II       0.98      1.00      0.99        45
+   Obesity_Type_III       1.00      1.00      1.00        49
+ Overweight_Level_I       0.97      0.90      0.94        41
+Overweight_Level_II       0.94      1.00      0.97        44
+
+           accuracy                           0.97       314
+          macro avg       0.97      0.97      0.97       314
+       weighted avg       0.98      0.97      0.97       314
+
+
+============================================================
+Результаты сохранены в lab_2_artifacts/results_summary.json
+Графики сохранены в lab_2_artifacts/
+============================================================
+
+============================================================
+ВЫВОДЫ
+============================================================
+
+1. Лучшая модель: BIDIRECTIONAL_GRU
+2. Лучший набор данных: selected_scaled
+3. Итоговое качество на тесте (после Grid Search):
+   - Accuracy:          0.9745 (97.45%)
+   - Balanced Accuracy: 0.9732 (97.32%)
+   - F1-score (macro):  0.9729
+   - F1-score (weighted): 0.9743
+
+4. Влияние min-max масштабирования:
+   - Масштабирование улучшило качество модели
+
+5. Влияние отбора признаков:
+   - Отобранные признаки сработали лучше
+
+6. Влияние подбора гиперпараметров:
+   - Улучшение Accuracy:          +1.66%
+   - Улучшение Balanced Accuracy: +1.69%
+   - Улучшение F1-score:          +1.76%
+
+7. Архитектура модели:
+   - Bidirectional GRU лучше уловила паттерны, чем Dense NN
+   - Оптимальные гиперпараметры: {'gru_units_1': 64, 'gru_units_2': 64, 'dropout': 0.4, 'learning_rate': 0.001}
+
+8. Анализ по классам:
+   - Модель классифицирует 7 уровней ожирения
+   - Отличное качество для практических задач
+   - Balanced Accuracy показывает сбалансированное качество по всем классам
+
+9. Рекомендации:
+   - Модель может использоваться для предсказания уровня ожирения
+   - Наиболее важные признаки включают BMI, вес, рост, возраст
+   - Инженерные признаки улучшили качество классификации
+   - Min-max масштабирование критично для нейросетевых моделей
+    
+============================================================
+АНАЛИЗ ЗАВЕРШЕН
+============================================================
