@@ -987,50 +987,6 @@ def main():
     print(f"Графики сохранены в {output_dir}/")
     print(f"{'=' * 60}")
 
-    # Вывести выводы
-    print("\n" + "=" * 60)
-    print("ВЫВОДЫ")
-    print("=" * 60)
-    print(f"""
-1. Лучшая модель: {best_info['model_name'].upper()}
-2. Лучший набор данных: {best_info['dataset_name']}
-3. Итоговое качество на тесте (после Grid Search):
-   - Accuracy:          {test_metrics_after['accuracy']:.4f} ({test_metrics_after['accuracy']*100:.2f}%)
-   - Balanced Accuracy: {test_metrics_after['balanced_accuracy']:.4f} ({test_metrics_after['balanced_accuracy']*100:.2f}%)
-   - F1-score (macro):  {test_metrics_after['f1_macro']:.4f}
-   - F1-score (weighted): {test_metrics_after['f1_weighted']:.4f}
-
-4. Влияние min-max масштабирования:
-   - Масштабирование {'улучшило' if 'scaled' in best_info['dataset_name'] else 'не улучшило'} качество модели
-
-5. Влияние отбора признаков:
-   - {'Отобранные признаки сработали лучше' if 'selected' in best_info['dataset_name'] else 'Лучше сработали все признаки'}
-
-6. Влияние подбора гиперпараметров:
-   - Улучшение Accuracy:          {improvement_acc:+.2f}%
-   - Улучшение Balanced Accuracy: {improvement_bal_acc:+.2f}%
-   - Улучшение F1-score:          {improvement_f1:+.2f}%
-
-7. Архитектура модели:
-   - {'Bidirectional GRU лучше уловила паттерны, чем Dense NN' if best_info['model_name'] == 'bidirectional_gru' else 'Dense NN показала себя лучше, чем Bidirectional GRU'}
-   - Оптимальные гиперпараметры: {grid_results['best_params']}
-
-8. Анализ по классам:
-   - Модель классифицирует {num_classes} уровней ожирения
-   - {'Отличное' if test_metrics_after['balanced_accuracy'] > 0.9 else 'Хорошее' if test_metrics_after['balanced_accuracy'] > 0.8 else 'Умеренное'} качество для практических задач
-   - Balanced Accuracy показывает сбалансированное качество по всем классам
-
-9. Рекомендации:
-   - Модель может использоваться для предсказания уровня ожирения
-   - Наиболее важные признаки включают BMI, вес, рост, возраст
-   - Инженерные признаки улучшили качество классификации
-   - Min-max масштабирование критично для нейросетевых моделей
-    """)
-
-    print("=" * 60)
-    print("АНАЛИЗ ЗАВЕРШЕН")
-    print("=" * 60)
-
 
 if __name__ == '__main__':
     main()

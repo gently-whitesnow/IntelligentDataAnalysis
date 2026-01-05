@@ -5,7 +5,7 @@
 Датасет: Прочность бетона на сжатие
 Модели: Полносвязная Dense НС, 1D сверточная НС
 Преобразование данных: Стандартизация
-Метрики: RMSE, R²
+Метрики качества регресии: RMSE, R²
 """
 
 import pandas as pd
@@ -163,6 +163,7 @@ def plot_correlations(df: pd.DataFrame, output_dir: Path) -> None:
             axes[idx].set_visible(False)
 
         plt.tight_layout()
+        # диаграмма рассеяния для каждой пары признаков
         plt.savefig(output_dir / 'scatter_plots.png', dpi=100, bbox_inches='tight')
         plt.close()
         print(f"Сохранены scatter-графики для {n_features} признаков")
@@ -760,47 +761,6 @@ def main():
     # Сохранить summary
     with open(output_dir / 'results_summary.json', 'w', encoding='utf-8') as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
-
-    print(f"\n{'=' * 60}")
-    print(f"Результаты сохранены в {output_dir}/results_summary.json")
-    print(f"Графики сохранены в {output_dir}/")
-    print(f"{'=' * 60}")
-
-    # Вывести выводы
-    print("\n" + "=" * 60)
-    print("ВЫВОДЫ")
-    print("=" * 60)
-    print(f"""
-1. Лучшая модель: нейросеть {best_info['model_name'].upper()}
-2. Лучший набор данных: {best_info['dataset_name']}
-3. Итоговое качество на тесте:
-   - RMSE: {test_metrics_after['rmse']:.4f} MPa
-   - R²: {test_metrics_after['r2']:.4f}
-   - MAE: {test_metrics_after['mae']:.4f} MPa
-
-4. Влияние стандартизации:
-   - Стандартизация {'улучшила' if 'scaled' in best_info['dataset_name'] else 'не улучшила'} качество модели
-
-5. Влияние отбора признаков:
-   - {'Отобранные признаки сработали лучше' if 'selected' in best_info['dataset_name'] else 'Лучше сработали все признаки'}
-
-6. Влияние подбора гиперпараметров:
-   - Улучшение RMSE: {improvement_rmse:+.2f}%
-   - Улучшение R²: {improvement_r2:+.2f}%
-
-7. Архитектура модели:
-   - {'1D CNN лучше уловила паттерны признаков, чем Dense NN' if best_info['model_name'] == 'conv1d' else 'Dense NN показала себя лучше, чем 1D CNN'}
-   - Оптимальные гиперпараметры: {grid_results['best_params']}
-
-8. Рекомендации:
-   - Модель предсказывает прочность бетона, объясняя {test_metrics_after['r2']*100:.1f}% дисперсии
-   - Средняя ошибка предсказания: ±{test_metrics_after['mae']:.2f} MPa
-   - {'Отличное' if test_metrics_after['r2'] > 0.9 else 'Хорошее' if test_metrics_after['r2'] > 0.8 else 'Умеренное'} качество для практических задач
-    """)
-
-    print("=" * 60)
-    print("АНАЛИЗ ЗАВЕРШЕН")
-    print("=" * 60)
 
 
 if __name__ == '__main__':
