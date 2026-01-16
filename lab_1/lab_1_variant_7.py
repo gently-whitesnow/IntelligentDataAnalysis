@@ -272,16 +272,20 @@ def prepare_datasets(df: pd.DataFrame, target_col: str) -> Dict:
     print(f"Всего признаков (с инженерными): {X.shape[1]}")
 
     # Отбор признаков
-    X_selected, selected_features = select_features(X, y, top_fraction=0.7)
+    X_selected, _ = select_features(X, y, top_fraction=0.7)
 
     # Создать 4 версии датасета
     datasets = {}
 
     for name, features in [('original', X), ('selected', X_selected)]:
         # Разбиение на train/val/test (70/15/15)
+        # Отделяем тестовые данные xtrain xtest ytrain ytest
+        # отщепляем 15% для теста
         X_temp, X_test, y_temp, y_test = train_test_split(
             features, y, test_size=0.15, random_state=RANDOM_STATE
         )
+
+        # отделяем валидационные данные
         X_train, X_val, y_train, y_val = train_test_split(
             X_temp, y_temp, test_size=0.176, random_state=RANDOM_STATE
         )
@@ -352,11 +356,11 @@ def build_conv1d_model(input_dim: int, filters: int = 64, kernel_size: int = 3,
     """Собрать 1D сверточную нейросеть."""
     model = keras.Sequential([
         layers.Input(shape=(input_dim, 1)),
-        layers.Conv1D(filters, kernel_size=kernel_size, activation='relu', padding='same'),
+        layers.Conv1D(filters, kernel_size=kernel_size, activation='relu', padding='same'), # same - выход оставляем такой же дополняем нулями
         layers.BatchNormalization(),
         layers.Conv1D(filters * 2, kernel_size=kernel_size, activation='relu', padding='same'),
         layers.BatchNormalization(),
-        layers.GlobalAveragePooling1D(),
+        layers.GlobalAveragePooling1D(), # среднее по всем фильтрам
         layers.Dense(64, activation='relu'),
         layers.Dropout(dropout),
         layers.Dense(32, activation='relu'),
@@ -390,19 +394,21 @@ def train_model(model: keras.Model, X_train: np.ndarray, y_train: np.ndarray,
                 X_val: np.ndarray, y_val: np.ndarray, epochs: int = 200,
                 batch_size: int = 32, verbose: int = 0) -> keras.callbacks.History:
     """Обучить модель нейросети."""
+    # параметры регуляризации
     callbacks = [
-        EarlyStopping(
-            monitor='val_loss',
-            patience=20,
-            restore_best_weights=True,
-            verbose=0
+        EarlyStopping( # ранний выход защита от переобучения
+            monitor='val_loss',            # что отслеживаем: ошибка (loss) на валидации
+            patience=20,                   # сколько ЭПОХ подряд ждать улучшения, прежде чем остановиться
+            restore_best_weights=True,     # после остановки вернуть веса с ЛУЧШИМ val_loss (а не последние)
+            verbose=0                      # уровень логов: 0 = тихо, 1 = печатать сообщения
         ),
-        ReduceLROnPlateau(
-            monitor='val_loss',
-            factor=0.5,
-            patience=10,
-            min_lr=1e-7,
-            verbose=0
+
+        ReduceLROnPlateau( # снижение learning rate при застревании
+            monitor='val_loss',            # снова следим за val_loss (важно для качества, а не для train)
+            factor=0.5,                    # во сколько раз уменьшать lr: новый_lr = старый_lr * 0.5
+            patience=10,                   # сколько эпох без улучшения ждать перед снижением lr
+            min_lr=1e-7,                   # нижний предел lr: ниже этого lr опускаться не будет
+            verbose=0                      # 0 = без сообщений, 1 = будет писать когда снизил lr
         )
     ]
 
@@ -434,10 +440,8 @@ def train_and_evaluate_all(datasets: Dict, epochs: int = 200) -> Dict:
 
         X_train = dataset['X_train']
         X_val = dataset['X_val']
-        X_test = dataset['X_test']
         y_train = dataset['y_train']
         y_val = dataset['y_val']
-        y_test = dataset['y_test']
 
         input_dim = X_train.shape[1]
         results[dataset_name] = {}
@@ -662,10 +666,7 @@ def grid_search(dataset: Dict, model_type: str, epochs: int = 150) -> Dict:
 
 def main():
     """Основная функция выполнения."""
-    print("\n" + "=" * 70)
-    print(" " * 20 + "ЛАБОРАТОРНАЯ 1 - ВАРИАНТ 7")
     print(" " * 10 + "Регрессия прочности бетона на сжатие")
-    print("=" * 70)
 
     # Подготовка
     output_dir = Path('lab_1_artifacts')

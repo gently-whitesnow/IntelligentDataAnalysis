@@ -27,7 +27,7 @@ from sklearn.feature_selection import mutual_info_classif
 # Try to configure JAX backend if available, otherwise use default
 try:
     import os
-    os.environ['KERAS_BACKEND'] = 'jax'
+    os.environ['KERAS_BACKEND'] = 'jax' # высокоуровневый API для построения нейронных сетей на основе JAX
 except:
     pass
 
@@ -376,7 +376,7 @@ def prepare_datasets(df: pd.DataFrame, target_col: str = 'NObeyesdad') -> Dict:
     print(f"\nКлассы: {list(le_target.classes_)}")
 
     # Отбор признаков
-    X_selected, selected_features = select_features(X, y, top_fraction=0.7)
+    X_selected = select_features(X, y, top_fraction=0.7)
 
     # Создать 4 версии датасета
     datasets = {}
@@ -472,7 +472,7 @@ def build_bidirectional_gru_model(input_dim: int, num_classes: int = 7,
     """Собрать двунаправленную GRU нейросеть для классификации табличных данных."""
     model = keras.Sequential([
         layers.Input(shape=(input_dim, 1)),
-        layers.Bidirectional(layers.GRU(gru_units_1, return_sequences=True)),
+        layers.Bidirectional(layers.GRU(gru_units_1, return_sequences=True)), # gpu слой читает последовательность gru_units_1 - число нейронов внтури gru (rs - выдавать ли последоватьность или только последний нейрон)
         layers.Dropout(dropout),
         layers.Bidirectional(layers.GRU(gru_units_2)),
         layers.Dropout(dropout),
@@ -562,7 +562,6 @@ def train_and_evaluate_all(datasets: Dict, num_classes: int = 7, epochs: int = 2
 
         X_train = dataset['X_train']
         X_val = dataset['X_val']
-        X_test = dataset['X_test']
         y_train = dataset['y_train_cat']
         y_val = dataset['y_val_cat']
 
@@ -857,7 +856,7 @@ def main():
     df_clean = clean_data(df)
 
     # Шаг 3g: Кодирование категориальных признаков (перед инжинирингом)
-    df_encoded, encoders = encode_categoricals(df_clean)
+    df_encoded = encode_categoricals(df_clean)
 
     # Шаг 3d: Корреляционный анализ
     plot_correlations(df_encoded, output_dir, target_col='NObeyesdad')
